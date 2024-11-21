@@ -1,4 +1,4 @@
-#### **DBMS Questiion Paper Solution**
+# **DBMS Questiion Paper Solution**
 
 ### **Q1: Differentiate Between Weak and Strong Entity Type**
 
