@@ -140,3 +140,51 @@
   - **Parent Table:** `Departments` with `Department_ID` as the primary key.
   - **Child Table:** `Employees` with `Department_ID` as a foreign key.
   - The constraint ensures that every `Department_ID` in `Employees` must exist in `Departments`.
+
+
+
+
+
+
+
+
+### Q5a) Definitions:
+
+**i) Candidate Key:**
+A *candidate key* is a set of one or more attributes (columns) that can uniquely identify a record in a database table. It is a minimal superkey, meaning no subset of the candidate key can uniquely identify the record. A table can have multiple candidate keys, but one will be chosen as the primary key.
+
+**ii) Primary Key:**
+A *primary key* is a special candidate key chosen to uniquely identify each record in a database table. It must have the following properties:
+- Uniqueness: No two rows can have the same value for the primary key.
+- Non-nullability: Every record must have a value for the primary key (cannot be NULL).
+
+A table can only have one primary key.
+
+**iii) Alternate Key:**
+An *alternate key* refers to any candidate key that is not selected as the primary key. These are essentially secondary options that could uniquely identify records, but are not used as the primary key.
+
+---
+
+### Q5b) What is Mapping Cardinality? Explain ALTER and UPDATE command:
+
+**Mapping Cardinality:**
+Mapping cardinality refers to the relationship between two sets or tables in a database. It defines how many instances of one entity are related to instances of another entity. In relational databases, it is typically represented by the cardinality of relationships between tables. The types of cardinalities are:
+- **One-to-One (1:1):** One record in a table is related to exactly one record in another table.
+- **One-to-Many (1:M):** One record in a table is related to multiple records in another table.
+- **Many-to-Many (M:N):** Multiple records in one table are related to multiple records in another table.
+
+**ALTER Command:**
+The `ALTER` command is used to modify the structure of an existing database object (like a table). It can perform operations such as adding, deleting, or modifying columns, or even renaming a table. Example:
+- `ALTER TABLE table_name ADD column_name data_type;`
+- `ALTER TABLE table_name DROP COLUMN column_name;`
+
+**UPDATE Command:**
+The `UPDATE` command is used to modify the data within a table. It allows you to change existing records based on specific conditions. Example:
+- `UPDATE table_name SET column_name = new_value WHERE condition;`
+
+---
+
+### Q5c) What is Null?
+
+**Null:**
+In database terminology, *NULL* represents the absence of a value or the lack of data in a field. It is not the same as an empty string or zero; it simply means that the value is unknown, undefined, or missing. A field containing a NULL value does not hold any actual data, and special handling is required when querying or performing operations involving NULL values (e.g., `IS NULL` or `IS NOT NULL`).
