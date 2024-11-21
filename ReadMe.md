@@ -143,6 +143,187 @@
 
 ---
 
+
+### **SQL Queries for the Given Schema**
+### Created Tables with Data
+
+#### **Salesman Table**
+| Salesman_id | Name  | City       | Comission |
+|-------------|-------|------------|-----------|
+| 1           | Raj   | Delhi      | 500.00    |
+| 2           | Amit  | Pune       | 800.00    |
+| 3           | Sara  | Bangalore  | 600.00    |
+| 4           | John  | Mumbai     | 700.00    |
+
+---
+
+#### **Customer Table**
+| Customer_id | Customer_name | City       | Grade | Salesman_id |
+|-------------|---------------|------------|-------|-------------|
+| 101         | Ravi          | Delhi      | 1     | 1           |
+| 102         | Priya         | Pune       | 2     | 2           |
+| 103         | Karan         | Bangalore  | 3     | 3           |
+| 104         | Anjali        | Mumbai     | 1     | 4           |
+| 105         | Neha          | Delhi      | 2     | 1           |
+
+---
+
+#### **Order Table**
+| Order_no | Purchase_amt | Order_date | Customer_id | Salesman_id |
+|----------|--------------|------------|-------------|-------------|
+| 1001     | 5500.00      | 2024-11-01 | 101         | 1           |
+| 1002     | 4500.00      | 2024-11-05 | 102         | 2           |
+| 1003     | 6000.00      | 2024-11-10 | 103         | 3           |
+| 1004     | 3000.00      | 2024-11-15 | 104         | 4           |
+| 1005     | 7500.00      | 2024-11-18 | 105         | 1           |
+
+---
+
+### **Schema for `Salesman` Table**  
+```sql
+CREATE TABLE Salesman (
+    Salesman_id INT PRIMARY KEY,   -- Unique identifier for salesman
+    Name VARCHAR(50) NOT NULL,    -- Name of the salesman
+    City VARCHAR(50),             -- City of the salesman
+    Comission DECIMAL(10, 2)      -- Commission earned by the salesman
+);
+```
+
+---
+
+### **Schema for `Order` Table**  
+```sql
+CREATE TABLE Order (
+    Order_no INT PRIMARY KEY,        -- Unique identifier for order
+    Purchase_amt DECIMAL(10, 2),     -- Purchase amount of the order
+    Order_date DATE,                 -- Date of the order
+    Customer_id INT,                 -- Customer who placed the order
+    Salesman_id INT,                 -- Salesman associated with the order
+    FOREIGN KEY (Customer_id) REFERENCES Customer(Customer_id), -- Foreign key to Customer table
+    FOREIGN KEY (Salesman_id) REFERENCES Salesman(Salesman_id)  -- Foreign key to Salesman table
+);
+```
+
+---
+
+### **Schema for `Customer` Table**  
+```sql
+CREATE TABLE Customer (
+    Customer_id INT PRIMARY KEY,   -- Unique identifier for customer
+    Customer_name VARCHAR(50) NOT NULL, -- Name of the customer
+    City VARCHAR(50),              -- City of the customer
+    Grade INT,                     -- Grade of the customer
+    Salesman_id INT,               -- Associated salesman for the customer
+    FOREIGN KEY (Salesman_id) REFERENCES Salesman(Salesman_id) -- Foreign key to Salesman table
+);
+```
+
+---
+
+### **Key Points of the Schema**
+1. **Primary Keys**:
+   - `Salesman_id` in `Salesman`.
+   - `Order_no` in `Order`.
+   - `Customer_id` in `Customer`.
+   
+2. **Foreign Keys**:
+   - `Salesman_id` in `Order` and `Customer` references `Salesman(Salesman_id)`.
+   - `Customer_id` in `Order` references `Customer(Customer_id)`.
+
+3. **Data Types**:
+   - `INT` for IDs and numeric values (e.g., grade).
+   - `VARCHAR` for string values like names and cities.
+   - `DECIMAL` for monetary values (e.g., `Purchase_amt`, `Comission`).
+   - `DATE` for order dates.
+---
+
+#### **i) Remove all the orders whose purchase amount is less than 5000**  
+```sql
+DELETE FROM Order 
+WHERE Purchase_amt < 5000;
+```
+
+---
+
+#### **ii) Find the salesman and customer who live in the same city. Retrieve customer name, salesman name, and salesman city.**  
+```sql
+SELECT c.Customer_name, s.Name AS Salesman_name, s.City AS Salesman_city 
+FROM Customer c 
+JOIN Salesman s 
+ON c.City = s.City;
+```
+
+---
+
+#### **iii) Add information of a new salesman in the salesman table.**  
+```sql
+INSERT INTO Salesman (Salesman_id, Name, City, Comission) 
+VALUES (101, 'Amit', 'Mumbai', 800);
+```
+
+---
+
+#### **iv) Find the total orders placed by each customer. Retrieve customer id and total orders.**  
+```sql
+SELECT Customer_id, COUNT(Order_no) AS Total_Orders 
+FROM Order 
+GROUP BY Customer_id;
+```
+
+---
+
+#### **v) Write the relational algebra query to show the details of all customers.**  
+**Relational Algebra Query:**  
+```
+Π(Customer_id, Customer_name, City, Grade, Salesman_id)(Customer)
+```
+
+---
+
+#### **vi) Find the orders made by customers. Retrieve order number and customer name.**  
+```sql
+SELECT o.Order_no, c.Customer_name 
+FROM Order o 
+JOIN Customer c 
+ON o.Customer_id = c.Customer_id;
+```
+
+---
+
+#### **vii) Find the salesman who earns a commission not equal to 500.**  
+```sql
+SELECT * 
+FROM Salesman 
+WHERE Comission <> 500;
+```
+
+---
+
+#### **viii) Find the customers who live in cities Delhi, Pune, Bangalore, or Bhopal.**  
+```sql
+SELECT * 
+FROM Customer 
+WHERE City IN ('Delhi', 'Pune', 'Bangalore', 'Bhopal');
+```
+
+---
+
+#### **ix) Change the salesman name from 'Raj' to 'Raju'.**  
+```sql
+UPDATE Salesman 
+SET Name = 'Raju' 
+WHERE Name = 'Raj';
+```
+
+---
+
+#### **x) Retrieve all the details from the salesman table.**  
+```sql
+SELECT * 
+FROM Salesman;
+```
+
+---
 ### **Q1a) Transformation of ER Diagram Components into Relations**
 
 #### **i) Regular Entity Type**  
