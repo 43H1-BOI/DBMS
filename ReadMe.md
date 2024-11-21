@@ -143,111 +143,102 @@
 
 ---
 
+### **Q1a) Transformation of ER Diagram Components into Relations**
 
-Q1a) Transformation of ER Diagram Components into Relations
+#### **i) Regular Entity Type**  
+A regular (strong) entity type is directly transformed into a relation (table).  
+- Each attribute of the entity becomes a column in the relation.  
+- The primary key of the entity is used as the primary key of the relation.  
 
-i) Regular Entity Type
-
-A regular (strong) entity type is directly transformed into a relation (table).
-
-Each attribute of the entity becomes a column in the relation.
-
-The primary key of the entity is used as the primary key of the relation.
-
-
-Example:
-Entity: Employee(ID, Name, Age, Department)
-Relation:
-
+**Example:**  
+Entity: `Employee(ID, Name, Age, Department)`  
+Relation:  
+```sql
 CREATE TABLE Employee (
   ID INT PRIMARY KEY,
   Name VARCHAR(50),
   Age INT,
   Department VARCHAR(50)
 );
-
+```
 
 ---
 
-ii) Composite Attribute
+#### **ii) Composite Attribute**  
+Composite attributes are broken down into their constituent simple attributes. These simple attributes are included as columns in the relation.  
 
-Composite attributes are broken down into their constituent simple attributes. These simple attributes are included as columns in the relation.
-
-Example:
-Composite Attribute: FullName (FirstName, LastName)
-Relation:
-
+**Example:**  
+Composite Attribute: `FullName (FirstName, LastName)`  
+Relation:  
+```sql
 CREATE TABLE Person (
   ID INT PRIMARY KEY,
   FirstName VARCHAR(50),
   LastName VARCHAR(50)
 );
-
-
----
-
-Q1b) Characteristics of Data Models
-
+```
 
 ---
 
-Q2a) Logical and Physical Data Independence
+### **Q1b) Characteristics of Data Models**
 
-Logical Data Independence
+| **Feature**            | **Relational Model**                                      | **Hierarchical Model**                             | **Network Model**                                      |
+|------------------------|----------------------------------------------------------|--------------------------------------------------|-------------------------------------------------------|
+| **Structure**          | Tables (relations) with rows and columns.                | Tree-like structure with parent-child hierarchy. | Graph structure with records and sets.               |
+| **Data Representation**| Data stored in tuples (rows) and attributes (columns).    | Data stored as records with parent-child links.  | Data stored as records with multiple parent-child links. |
+| **Relationships**      | Established using primary and foreign keys.              | One-to-many relationships (parent to child).     | Many-to-many relationships via pointers.             |
+| **Flexibility**        | Highly flexible and easy to modify.                      | Rigid; requires restructuring for changes.       | Less rigid than hierarchical but still complex.       |
+| **Ease of Use**        | Easy for end users and applications.                     | Complex to query and update.                     | Moderate complexity in query and update.             |
 
-Refers to the ability to change the conceptual schema (e.g., adding/removing tables) without affecting the external schema or application programs.
+---
 
-Example: Adding a new attribute to a table without modifying application queries.
+### **Q2a) Logical and Physical Data Independence**
 
+#### **Logical Data Independence**  
+- Refers to the ability to change the conceptual schema (e.g., adding/removing tables) without affecting the external schema or application programs.  
+- **Example**: Adding a new attribute to a table without modifying application queries.
 
-Physical Data Independence
+#### **Physical Data Independence**  
+- Refers to the ability to change the internal schema (e.g., changing storage mechanisms or file structures) without affecting the conceptual schema.  
+- **Example**: Moving data from one disk to another without changing the database schema.
 
-Refers to the ability to change the internal schema (e.g., changing storage mechanisms or file structures) without affecting the conceptual schema.
-
-Example: Moving data from one disk to another without changing the database schema.
-
-
-Which is harder to achieve and why?
-
+#### **Which is harder to achieve and why?**  
 Logical data independence is harder to achieve because it requires applications to be isolated from schema changes at the logical level, which involves reworking data access layers and query adjustments. Physical independence primarily involves storage changes, which have less impact on application logic.
 
-
 ---
 
-Q2b) Degree of Relationship
+### **Q2b) Degree of Relationship**
 
-The degree of a relationship in an ER diagram refers to the number of entities participating in the relationship.
+The degree of a relationship in an ER diagram refers to the number of entities participating in the relationship.  
 
-Types of Relationship Degree
+#### **Types of Relationship Degree**
 
-1. Unary Relationship (Degree 1)
-Involves a single entity type.
-Example: An employee supervises another employee.
+1. **Unary Relationship (Degree 1)**  
+   Involves a single entity type.  
+   **Example**: An employee supervises another employee.  
+   ``` 
+   Employee (ID, Name, SupervisorID) 
+   ```
 
-Employee (ID, Name, SupervisorID)
+2. **Binary Relationship (Degree 2)**  
+   Involves two different entity types.  
+   **Example**: A student enrolls in a course.  
+   ``` 
+   Student(ID, Name)  
+   Course(ID, Title)  
+   Enrollment(StudentID, CourseID)  
+   ```
 
-
-2. Binary Relationship (Degree 2)
-Involves two different entity types.
-Example: A student enrolls in a course.
-
-Student(ID, Name)  
-Course(ID, Title)  
-Enrollment(StudentID, CourseID)
-
-
-3. Ternary Relationship (Degree 3)
-Involves three entity types.
-Example: A supplier supplies a product to a project.
-
-Supplier(ID, Name)  
-Product(ID, Name)  
-Project(ID, Title)  
-Supplies(SupplierID, ProductID, ProjectID)
-
-
-
-
+3. **Ternary Relationship (Degree 3)**  
+   Involves three entity types.  
+   **Example**: A supplier supplies a product to a project.  
+   ``` 
+   Supplier(ID, Name)  
+   Product(ID, Name)  
+   Project(ID, Title)  
+   Supplies(SupplierID, ProductID, ProjectID)  
+   ```
+   
 ---
 
 
