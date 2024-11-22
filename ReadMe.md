@@ -147,6 +147,18 @@
 ### **SQL Queries for the Given Schema**
 ### Created Tables with Data
 
+#### **Table Schemas : **
+##### **Salesman Table**
+| Salesman_id | Name  | City       | Comission |
+
+##### **Customer Table**
+| Customer_id | Customer_name | City       | Grade | Salesman_id |
+
+##### **Order Table**
+| Order_no | Purchase_amt | Order_date | Customer_id | Salesman_id |
+
+---
+
 #### **Salesman Table**
 | Salesman_id | Name  | City       | Comission |
 |-------------|-------|------------|-----------|
