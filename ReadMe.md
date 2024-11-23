@@ -142,7 +142,91 @@
   - The constraint ensures that every `Department_ID` in `Employees` must exist in `Departments`.
 
 ---
+### **1. Explanation of 2nd and 3rd Normal Forms**
 
+#### **Second Normal Form (2NF)**  
+- A table is in **2NF** if:
+  1. It is already in **1NF** (no repeating groups, and each column contains atomic values).  
+  2. Every non-key column depends on the **whole primary key**, not just part of it.  
+
+**Example**:  
+
+**Before 2NF (1NF table)**:  
+| OrderID | ProductName | SupplierName | Quantity |  
+|---------|-------------|--------------|----------|  
+| 1       | Pen         | ABC Supplies | 50       |  
+| 2       | Notebook    | XYZ Supplies | 20       |  
+
+- Here, `OrderID` and `ProductName` together are the key, but `SupplierName` only depends on `ProductName`.  
+
+**After 2NF**:  
+**Orders Table**:  
+| OrderID | ProductName | Quantity |  
+|---------|-------------|----------|  
+| 1       | Pen         | 50       |  
+| 2       | Notebook    | 20       |  
+
+**Products Table**:  
+| ProductName | SupplierName |  
+|-------------|--------------|  
+| Pen         | ABC Supplies |  
+| Notebook    | XYZ Supplies |  
+
+---
+
+#### **Third Normal Form (3NF)**  
+- A table is in **3NF** if:
+  1. It is already in **2NF**.  
+  2. There are no **transitive dependencies** (non-key columns should not depend on other non-key columns).  
+
+**Example**:  
+
+**Before 3NF (2NF table)**:  
+| EmployeeID | EmployeeName | DepartmentID | DepartmentName | Manager |  
+|------------|--------------|--------------|----------------|---------|  
+| 1          | Alice        | D001         | HR             | John    |  
+| 2          | Bob          | D002         | IT             | Mark    |  
+
+- Here, `DepartmentName` and `Manager` depend on `DepartmentID`, not on `EmployeeID`.  
+
+**After 3NF**:  
+**Employees Table**:  
+| EmployeeID | EmployeeName | DepartmentID |  
+|------------|--------------|--------------|  
+| 1          | Alice        | D001         |  
+| 2          | Bob          | D002         |  
+
+**Departments Table**:  
+| DepartmentID | DepartmentName | Manager |  
+|--------------|----------------|---------|  
+| D001         | HR             | John    |  
+| D002         | IT             | Mark    |  
+
+---
+
+### **2. Differences**
+
+#### **a) DELETE vs TRUNCATE**  
+
+| Feature       | **DELETE**                                     | **TRUNCATE**                                |
+|---------------|-----------------------------------------------|--------------------------------------------|
+| **Purpose**    | Removes specific rows from the table.          | Removes all rows from the table.           |
+| **Condition**  | You can use a `WHERE` clause to delete rows.   | No condition; deletes all rows.            |
+| **Performance**| Slower because it logs each deleted row.       | Faster as it does not log individual rows. |
+| **Rollback**   | Can be rolled back if inside a transaction.    | Cannot be rolled back.                     |
+| **Triggers**   | Activates triggers on the table.               | Does not activate triggers.                |
+
+---
+
+#### **b) PRIMARY KEY vs UNIQUE KEY**  
+
+| Feature       | **PRIMARY KEY**                             | **UNIQUE KEY**                            |
+|---------------|--------------------------------------------|-------------------------------------------|
+| **Uniqueness**| Ensures all rows are unique and no NULLs.   | Ensures uniqueness but allows NULLs.      |
+| **Purpose**   | Used to identify each row in the table.      | Used to ensure no duplicate values in a column. |
+| **Quantity**  | Only one primary key per table.             | Can have multiple unique keys in a table. |
+| **Index**     | Creates a clustered index.                  | Creates a non-clustered index.            |
+---
 
 ### **SQL Queries for the Given Schema**
 ### Created Tables with Data
